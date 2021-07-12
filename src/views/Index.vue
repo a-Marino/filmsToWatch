@@ -28,6 +28,11 @@ export default {
 </script>
 
 <style>
+.poster:hover {
+    filter: opacity(50%);
+    z-index: 0;
+}
+
 .top {
     width: 100%;
 }
@@ -49,6 +54,7 @@ img {
     top: 10px;
     left: 10px;
     font-weight: bold;
+    z-index: 1;
 }
 
 .cuadrado {

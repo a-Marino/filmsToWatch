@@ -1,6 +1,8 @@
 <template>
     <div class="nav flex items-center md:p-10 pt-2 px-2 md:h-12 h-auto min-w-full justify-between">
-        <img src="@/assets/filmsToWatch.png" alt="filmsToWatch" class="logo">
+        <router-link to="/">
+            <img src="@/assets/filmsToWatch.png" alt="filmsToWatch" class="logo">
+        </router-link>
         <div class="flex relative">
             <input type="text" class="search" placeholder="Search">
             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="23" viewBox="0 0 28.995 29" class="absolute right-4 top-2">

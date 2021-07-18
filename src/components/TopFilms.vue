@@ -39,8 +39,6 @@
 </template>
 
 <script>
-import env from '@/env.js'
-
 export default {
     name: 'Top',
     data() {
@@ -50,9 +48,9 @@ export default {
     },
     mounted() {
         this.axios
-        .get(`https://api.themoviedb.org/3/movie/popular?api_key=${env.apiKey}&language=en-US&page=1`)
+        .get(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.VUE_APP_APIKEY}&language=en-US&page=1`)
         .then(res => (
-            console.log(res.data.results),
+            // console.log(res.data.results),
             this.popularMovies = res.data.results
         ));
     } 

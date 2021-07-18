@@ -77,8 +77,6 @@
 </template>
 
 <script>
-import env from '@/env.js';
-
 export default {
     name: 'MovieDetails',
     data () {
@@ -102,9 +100,9 @@ export default {
 
         // GET Movie details
         this.axios
-        .get(`https://api.themoviedb.org/3/movie/${MovieID}?api_key=${env.apiKey}&language=en-US`)
+        .get(`https://api.themoviedb.org/3/movie/${MovieID}?api_key=${process.env.VUE_APP_APIKEY}&language=en-US`)
         .then(res => (
-            console.log(res.data),
+            // console.log(res.data),
             this.movieDetail = res.data, 
             movieRuntime = res.data.runtime,
             this.movieRuntime = convertTime(movieRuntime)
@@ -112,17 +110,17 @@ export default {
 
         // GET Movie cast
         this.axios 
-        .get(`https://api.themoviedb.org/3/movie/${MovieID}/credits?api_key=${env.apiKey}&language=en-US`)
+        .get(`https://api.themoviedb.org/3/movie/${MovieID}/credits?api_key=${process.env.VUE_APP_APIKEY}&language=en-US`)
         .then(res => (
-            console.log(res.data),
+            // console.log(res.data),
             this.movieCast = res.data
         ));
 
         // GET Movie images
         this.axios
-        .get(`https://api.themoviedb.org/3/movie/${MovieID}/images?api_key=${env.apiKey}`)
+        .get(`https://api.themoviedb.org/3/movie/${MovieID}/images?api_key=${process.env.VUE_APP_APIKEY}`)
         .then(res => (
-            console.log(res.data),
+            // console.log(res.data),
             this.movieImages = res.data
         ));
     },

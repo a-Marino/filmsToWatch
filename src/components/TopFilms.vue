@@ -5,7 +5,7 @@
             <h1 class="categorie text-3xl font-black overflow-hidden relative">TOP 🔥</h1>
         </div>
         <div class="flex lg:flex-row flex-col lg:space-y-0 space-y-7 items-center">
-            <div v-for="(movie, Index) in popularMovies.slice(0, 5)" :key="Index">
+            <div v-for="(movie, Index) in popularMovies.slice(0, 6)" :key="Index">
                 <router-link :to="'/movie/'+movie.id">
                     <div class="relative px-3">
                         <div class="rating space-x-3">
@@ -18,7 +18,7 @@
                     </div>
                     <div class="flex justify-between p-3">
                         <div>
-                            <h2 class="font-semibold truncate">{{movie.title}}</h2>
+                            <h2 class="font-semibold truncate md:text-sm text-lg">{{movie.title}}</h2>
                         </div>
                     </div>
                 </router-link>

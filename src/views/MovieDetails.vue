@@ -44,12 +44,12 @@
                             <p class="gris text-justify break-words pr-5 pt-1">{{movieDetail.overview}}</p>
                             <div class="flex flex-row mt-4">
                                 <div class="flex flex-col">
-                                    <p class='font-bold text-xl'>{{movieCast.crew[0].name}}</p>
-                                    <p class="gris text-md">{{movieCast.crew[0].job}}</p>
+                                    <p class='font-bold text-xl'>{{movieDirector.name}}</p>
+                                    <p class="gris text-md">{{movieDirector.job}}</p>
                                 </div>
                                 <div class="flex flex-col mx-auto">
-                                    <p class="font-bold text-xl">{{movieCast.crew[1].name}}</p>
-                                    <p class="gris text-md">{{movieCast.crew[1].job}}</p>
+                                    <p class="font-bold text-xl">{{movieProducer.name}}</p>
+                                    <p class="gris text-md">{{movieProducer.job}}</p>
                                 </div>
                             </div>
                         </div>
@@ -85,18 +85,34 @@ export default {
             movieCast: '',
             movieImages: '',
             movieRuntime: '',
+            movieDirector: '',
+            movieProducer: '',
+        }
+    },
+    methods: {
+        convertTime: function(num) {
+            const hours = Math.floor(num / 60);  
+            const minutes = num % 60;
+            return `${hours}h ${minutes}m`;   
+        },
+        getDirector: function() {
+            this.movieCast.crew.forEach(crewMember => {
+                if (crewMember.job == 'Director') {
+                    this.movieDirector = crewMember;
+                }
+            });
+        },
+        getProducer: function() {
+            this.movieCast.crew.forEach((crewMember) => {
+                if (crewMember.job == 'Producer') {
+                    this.movieProducer = crewMember;
+                }  
+            });
         }
     },
     mounted() {
         const MovieID = this.$route.params.id;
         let movieRuntime;
-
-        // function to transform integer to Hours
-        function convertTime(num) { 
-          const hours = Math.floor(num / 60);  
-          const minutes = num % 60;
-          return `${hours}h ${minutes}m`;         
-        }
 
         // GET Movie details
         this.axios
@@ -105,15 +121,17 @@ export default {
             // console.log(res.data),
             this.movieDetail = res.data, 
             movieRuntime = res.data.runtime,
-            this.movieRuntime = convertTime(movieRuntime)
+            this.movieRuntime = this.convertTime(movieRuntime)
         ));
 
         // GET Movie cast
         this.axios 
         .get(`https://api.themoviedb.org/3/movie/${MovieID}/credits?api_key=${process.env.VUE_APP_APIKEY}&language=en-US`)
         .then(res => (
-            // console.log(res.data),
-            this.movieCast = res.data
+            console.log(res.data),
+            this.movieCast = res.data,
+            this.getDirector(),
+            this.getProducer()
         ));
 
         // GET Movie images
@@ -123,7 +141,7 @@ export default {
             // console.log(res.data),
             this.movieImages = res.data
         ));
-    },
+    }
 }
 </script>
 

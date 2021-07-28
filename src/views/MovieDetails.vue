@@ -58,7 +58,7 @@
                     <div class='flex justify-center items-center'>
                         <div class="flex flex-col justify-center items-center space-y-3" v-for="(company, Index) in movieDetail.production_companies.slice(0, 1)" :key="Index">
                             <p class="text-2xl font-semibold text-center">{{company.name}}</p>
-                            <img :src="'https://image.tmdb.org/t/p/w500'+company.logo_path" alt="Company Logo" class="w-32 bg-gray-100 p-2">
+                            <img v-if="company.logo_path" :src="'https://image.tmdb.org/t/p/w500'+company.logo_path" alt="Company Logo" class="w-32 bg-gray-100 p-2">
                             <p class="gris">Production companie</p>
                         </div>
                     </div>

@@ -12,11 +12,15 @@
             </div>
         </div>
         <div class="absolute right-10 top-16 w-64 resultados text-sm" v-if="results.length > 0">
-            <ul v-for="movie in results.slice(0,3)" :key="movie.id">
-                <li class="border-b border-gray-700" v-if="movie">
-                    <router-link :to="'movie/'" class="block px-3 py-3 hover:bg-gray-900 rounded">{{movie.title}}</router-link>
+            <div v-for="movie in results.slice(0,3)" :key="movie.id">
+                <ul>
+                    <li class="border-b border-gray-700">
+                        <router-link :to="'movie/'+movie.id" class="block px-3 py-3 hover:bg-gray-900 rounded">
+                        {{movie.title}}
+                    </router-link>
                 </li>
             </ul>
+            </div>
         </div>
     </div>
 </template>
@@ -32,7 +36,7 @@ export default {
     },
     methods: {
         getResults(query) {
-            if(query == '') {
+            if(query == " ") {
                 return false;
             }
             this.axios

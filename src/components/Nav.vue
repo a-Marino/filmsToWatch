@@ -11,7 +11,7 @@
                 </svg>
             </div>
         </div>
-        <div class="absolute right-10 top-16 w-64 resultados text-sm" id="dropdown" v-if="results.length > 0" v-show="isOpen">
+        <div class="absolute lg:right-10 right-2 top-16 w-64 resultados text-sm" id="dropdown" v-if="results.length > 0" v-show="isOpen">
             <div v-for="movie in results.slice(0,3)" :key="movie.id">
                 <ul>
                     <li class="border-b border-gray-700">

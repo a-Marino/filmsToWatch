@@ -77,6 +77,16 @@
                 </div>
             </div>
         </div>
+        <div class="px-10 mt-10 flex flex-col">
+            <h2 class="text-3xl font-black overflow-hidden mr-2 py-2">Similar Shows</h2>
+            <div class="flex flex-col md:flex-row md:space-x-5 md:justify-center md:space-y-0 space-y-5 items-center mt-5 similar-shows p-3">
+                <div v-for="(similarShow, Index) in similarShows.slice(0,5)" :key="Index">
+                    <a :href="'/tv/'+similarShow.id">
+                        <img :src="'https://image.tmdb.org/t/p/w1280/'+similarShow.poster_path" class="w-56 backdrops">
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -87,6 +97,7 @@ export default {
         return {
             TVDetail: '',
             TVImages: '',
+            similarShows: '',
         }
     },
     mounted() {
@@ -107,6 +118,12 @@ export default {
         .then(res => (
             // console.log(res.data),
             this.TVImages = res.data
+        ));
+
+        this.axios
+        .get(`https://api.themoviedb.org/3/tv/${TVID}/similar?api_key=${process.env.VUE_APP_APIKEY}&language=en-US&page=1`)
+        .then(res => (
+            this.similarShows = res.data.results
         ));
     }
 }
@@ -160,6 +177,12 @@ img {
 }
 
 .overview {
+    background-color: #6773bf2c;
+    backdrop-filter: blur(5px);
+    border-radius: 10px;
+}
+
+.similar-shows {
     background-color: #6773bf2c;
     backdrop-filter: blur(5px);
     border-radius: 10px;

@@ -73,6 +73,17 @@
                 </div>
             </div>
         </div>
+        <!-- Similar Movies -->
+        <div class="px-10 mt-10 flex flex-col">
+            <h2 class="text-3xl font-black overflow-hidden mr-2 py-2">Similar Movies</h2>
+            <div class="flex flex-col md:flex-row md:space-x-5 md:justify-center md:space-y-0 space-y-5 items-center mt-5 similar-movies p-3">
+                <div v-for="(similarMovie, Index) in similarMovies.slice(0,5)" :key="Index">
+                    <a :href="'/movie/'+similarMovie.id">
+                        <img :src="'https://image.tmdb.org/t/p/w1280/'+similarMovie.poster_path" class="w-56 backdrops">
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -87,6 +98,7 @@ export default {
             movieRuntime: '',
             movieDirector: '',
             movieProducer: '',
+            similarMovies: '',
         }
     },
     methods: {
@@ -128,7 +140,7 @@ export default {
         this.axios 
         .get(`https://api.themoviedb.org/3/movie/${MovieID}/credits?api_key=${process.env.VUE_APP_APIKEY}&language=en-US`)
         .then(res => (
-            console.log(res.data),
+            // console.log(res.data),
             this.movieCast = res.data,
             this.getDirector(),
             this.getProducer()
@@ -141,6 +153,14 @@ export default {
             // console.log(res.data),
             this.movieImages = res.data
         ));
+
+        // GET Similar Movies
+        this.axios
+        .get(`https://api.themoviedb.org/3/movie/${MovieID}/similar?api_key=${process.env.VUE_APP_APIKEY}&language=en-US&page=1`)
+        .then(res => (
+            console.log(res.data.results),
+            this.similarMovies = res.data.results
+        ));
     }
 }
 </script>
@@ -148,6 +168,12 @@ export default {
 <style scoped>
 .backdrops:hover {
     filter: opacity(50%);
+}
+
+.similar-movies {
+    background-color: #6773bf2c;
+    backdrop-filter: blur(5px);
+    border-radius: 10px;
 }
 
 .more-images {

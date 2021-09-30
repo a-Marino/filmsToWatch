@@ -75,6 +75,7 @@
         </div>
         <!-- Similar Movies -->
         <div class="px-10 mt-10 flex flex-col">
+            <div class="cuadrado w-full"></div>
             <h2 class="text-3xl font-black overflow-hidden mr-2 py-2">Similar Movies</h2>
             <div class="flex flex-col md:flex-row md:space-x-5 md:justify-center md:space-y-0 space-y-5 items-center mt-5 similar-movies p-3">
                 <div v-for="(similarMovie, Index) in similarMovies.slice(0,5)" :key="Index">
@@ -166,6 +167,13 @@ export default {
 </script>
 
 <style scoped>
+.cuadrado {
+    background-color: #2D3254;
+    padding: 5px;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
 .backdrops:hover {
     filter: opacity(50%);
 }

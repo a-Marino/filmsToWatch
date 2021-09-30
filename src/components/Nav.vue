@@ -1,8 +1,10 @@
 <template>
     <div class="nav flex items-center md:p-10 pt-2 px-2 md:h-12 h-auto min-w-full justify-between">
-        <router-link to="/">
-            <img src="@/assets/filmsToWatch.png" alt="filmsToWatch" class="logo">
-        </router-link>
+        <div class="flex items-center space-x-10">
+            <router-link to="/">
+                <img src="@/assets/filmsToWatch.png" alt="filmsToWatch" class="logo">
+            </router-link>
+        </div>
         <div class="relative overflow-hidden" tabindex="0"> 
             <input type="text" class="search w-64" placeholder="Search" v-model="query" @keyup="getResults(query)" v-on:keyup.esc="isOpen = false" @keydown="isOpen = true">
             <div class="absolute right-4 top-2">
@@ -51,6 +53,10 @@ export default {
 </script>
 
 <style scoped>
+.cat:hover {
+    color: #707070;
+}
+
 .nav {
     background-color: #2D32541A;
     overflow-y: hidden;

@@ -33,4 +33,8 @@ body {
   color: #fff;
   font-family: 'Nunito Sans', sans-serif;
 }
+
+.router-link-exact-active {
+    text-decoration: underline;
+}
 </style>

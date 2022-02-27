@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- CAT TITLE -->
-        <div class="titulo-cat flex justify-center mt-7 space-x-3 items-center lg:w-1/4 md:w-1/2 md:mx-auto mx-5">
+        <div class="titulo-cat flex justify-center mt-7 space-x-3 items-center lg:w-1/4 md:w-1/2 md:mx-auto mx-5 mb-5">
             <h1 class="text-5xl overflow-hidden font-black">MOVIES</h1>
             <svg xmlns="http://www.w3.org/2000/svg" width="79" height="56" viewBox="0 0 98.879 79.103">
               <path id="Icon_material-movie" data-name="Icon material-movie" d="M82.1,6l9.888,19.776H77.159L67.272,6H57.384l9.888,19.776H52.44L42.552,6H32.664l9.888,19.776H27.72L17.832,6H12.888a9.875,9.875,0,0,0-9.838,9.888L3,75.215A9.917,9.917,0,0,0,12.888,85.1h79.1a9.917,9.917,0,0,0,9.888-9.888V6Z" transform="translate(-3 -6)" fill="#fff"/>
@@ -12,7 +12,7 @@
         <!-- Upcoming FILMS -->
         <Upcoming/>
         <!-- CAT TITLE -->
-        <div class="titulo-cat flex justify-center mt-7 space-x-5 items-center lg:w-1/5 md:w-1/2 md:mx-auto mx-5">
+        <div class="titulo-cat flex justify-center mt-7 space-x-5 items-center lg:w-1/5 md:w-1/2 md:mx-auto mx-5 mb-5">
             <h1 class="text-5xl overflow-hidden font-black">TV</h1>
             <svg id="Icon_ionic-ios-tv" data-name="Icon ionic-ios-tv" xmlns="http://www.w3.org/2000/svg" width="91.55" height="67.325" viewBox="0 0 91.55 67.325">
               <path id="Trazado_4" data-name="Trazado 4" d="M83.76,5.484H9.74A8.773,8.773,0,0,0,.984,14.24V54.994A8.773,8.773,0,0,0,9.74,63.75H83.778a8.773,8.773,0,0,0,8.756-8.756V14.24A8.8,8.8,0,0,0,83.76,5.484ZM87.22,54.975a3.462,3.462,0,0,1-3.461,3.461H9.74A3.462,3.462,0,0,1,6.28,54.975V14.24A3.462,3.462,0,0,1,9.74,10.78H83.778a3.462,3.462,0,0,1,3.461,3.461V54.975Z" transform="translate(-0.984 -5.484)" fill="#fff"/>
@@ -41,6 +41,15 @@ export default {
 </script>
 
 <style>
+.shadow {
+    position: absolute;
+    margin-top: -.6em;
+    margin-left: 2.5em;
+    opacity: .1;
+    z-index: -1;
+    transform: scale(1.2);
+}
+
 .poster:hover {
     filter: opacity(50%);
     z-index: 0;
@@ -74,7 +83,7 @@ img {
     background-color: #2D3254;
     padding: 5px;
     margin-right: 10px;
-    border-radius: 5px;
+    border-radius: 3px;
 }
 
 .titulo-cat {

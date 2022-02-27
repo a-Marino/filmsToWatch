@@ -3,6 +3,9 @@
         <div class="flex flex-row">
             <div class='cuadrado'></div>
             <h1 class="categorie text-3xl font-black overflow-hidden relative">Upcoming 📅</h1>
+            <div class="shadow">
+                <h1 class="categorie text-3xl font-black overflow-hidden relative">Upcoming 📅</h1>
+            </div>
         </div>
         <div class="flex lg:flex-row flex-col lg:space-y-0 space-y-7 items-center">
             <div v-for="(movie, Index) in upcomingMovies.slice(0, 6)" :key="Index">

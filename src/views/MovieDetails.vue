@@ -20,7 +20,7 @@
                 <div class="relative pr-3 overflow-hidden">
                     <img :src="'https://image.tmdb.org/t/p/w300'+movieDetail.poster_path" alt="poster">
                     <div class="Rating space-x-3 lg:left-2 lg:bottom-2 left-2 bottom-4">
-                        <h2 class="text-sm">{{movieDetail.vote_average}}</h2>
+                        <h2 class="text-sm">{{movieDetail.vote_average.toFixed(1)}}</h2>
                         <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 11.682 10.847">
                         <path id="Icon_ionic-ios-star" data-name="Icon ionic-ios-star" d="M13.488,7.13H9.653L8.487,3.651a.422.422,0,0,0-.793,0L6.529,7.13H2.667a.418.418,0,0,0-.417.417.307.307,0,0,0,.008.07.4.4,0,0,0,.175.295l3.152,2.222-1.21,3.518a.418.418,0,0,0,.143.469.4.4,0,0,0,.235.1.511.511,0,0,0,.261-.094l3.077-2.193,3.077,2.193a.489.489,0,0,0,.261.094.375.375,0,0,0,.232-.1.413.413,0,0,0,.143-.469l-1.21-3.518L13.72,7.891l.076-.065a.4.4,0,0,0-.308-.7Z" transform="translate(-2.25 -3.375)"/>
                         </svg>
@@ -50,6 +50,14 @@
                                 <div class="flex flex-col mx-auto">
                                     <p class="font-bold text-xl">{{movieProducer.name}}</p>
                                     <p class="gris text-md">{{movieProducer.job}}</p>
+                                </div>
+                            </div>
+                            <div class="flex flex-col mt-4">
+                                <p class="font-bold text-2xl mx-auto">Actors</p>
+                                <div class="flex flex-row space-x-5 justify-around mt-4">
+                                    <div v-for="(actor, Index) in actors.slice(0,4)" :key="Index">
+                                        <p class="text-xl gris">{{actor.name}}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -100,6 +108,7 @@ export default {
             movieDirector: '',
             movieProducer: '',
             similarMovies: '',
+            actors: '',
         }
     },
     methods: {
@@ -121,7 +130,7 @@ export default {
                     this.movieProducer = crewMember;
                 }  
             });
-        }
+        },
     },
     mounted() {
         const MovieID = this.$route.params.id;
@@ -144,7 +153,9 @@ export default {
             // console.log(res.data),
             this.movieCast = res.data,
             this.getDirector(),
-            this.getProducer()
+            this.getProducer(),
+            this.actors = res.data.cast,
+            console.log(this.actors)
         ));
 
         // GET Movie images
@@ -159,7 +170,7 @@ export default {
         this.axios
         .get(`https://api.themoviedb.org/3/movie/${MovieID}/similar?api_key=${process.env.VUE_APP_APIKEY}&language=en-US&page=1`)
         .then(res => (
-            console.log(res.data.results),
+            //console.log(res.data.results),
             this.similarMovies = res.data.results
         ));
     }

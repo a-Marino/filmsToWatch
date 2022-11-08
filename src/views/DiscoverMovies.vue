@@ -20,9 +20,11 @@
                 </router-link>
             </div>
         </div>
-        <div class="lg:flex flex-col hidden p-5 generos w-1/4 h-1/2">
-            <h1 class="text-3xl font-black overflow-hidden">GENEROS</h1>
-            <!-- foreach generos -->
+        <div class="lg:flex flex-col hidden p-5 divGeneros w-1/4 h-1/2 space-y-3">
+            <h1 class="text-3xl font-black overflow-hidden cursor-default">GENEROS</h1>
+            <div v-for="(genre, Index) in genres" :key="Index">
+                <p @click="saveId(genre.id), getMovies()" class="generos font-semibold text-lg">{{genre.name}}</p>
+            </div>
         </div>
     </div>
 </template>
@@ -33,16 +35,36 @@ export default {
     data() {
         return {
             movies: '',
+            genres: '',
+            savedId: '',
+        }
+    },
+    methods: {
+        saveId: function(id) {
+            this.savedId = id;
+            //console.log(this.savedId)
+        },
+
+        getMovies() {
+            this.axios
+            .get(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.VUE_APP_APIKEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${this.savedId}&with_watch_monetization_types=flatrate`)
+            .then(res => (
+                //console.log(res.data.results),
+                this.movies = res.data.results
+            ));
         }
     },
     mounted() {
         // GET DISCOVER MOVIES
+        this.getMovies();
+
+        // GET GENERES
         this.axios
-        .get(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.VUE_APP_APIKEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_watch_monetization_types=flatrate`)
+        .get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.VUE_APP_APIKEY}&language=en-US`)
         .then(res => (
-            console.log(res.data.results),
-            this.movies = res.data.results
-        ))
+            //console.log(res.data.genres),
+            this.genres = res.data.genres
+        ));  
     }
 }
 </script>
@@ -64,8 +86,17 @@ export default {
         z-index: 1;
     }
 
-    .generos {
+    .divGeneros {
         background-color: #2d325471;
         border-radius: 15px;
+    }
+    
+    .generos {
+        color: #fff;
+        cursor: pointer;
+    }
+
+    .generos:hover {
+        color: #707070;
     }
 </style>

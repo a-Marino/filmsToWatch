@@ -14,11 +14,14 @@
             </div>
         </div>
         <div class="absolute lg:right-10 right-2 top-16 w-64 resultados text-sm" id="dropdown" v-if="results.length > 0" v-show="isOpen">
-            <div v-for="movie in results.slice(0,3)" :key="movie.id">
+            <div v-for="(result, Index) in results.slice(0,4)" :key="Index">
                 <ul>
                     <li class="border-b border-gray-700">
-                        <a :href="'/movie/'+movie.id" class="block px-3 py-3 hover:bg-gray-900 rounded" >
-                            {{movie.title}}
+                        <a v-if="result.name" :href="'/tv/'+result.id" class="block px-3 py-3 hover:bg-gray-900 rounded" >
+                            {{result.name}}
+                        </a>
+                        <a v-if="result.title" :href="'/movie/'+result.id" class="block px-3 py-3 hover:bg-gray-900 rounded" >
+                            {{result.title}}
                         </a>
                     </li>
                 </ul>
@@ -42,8 +45,9 @@ export default {
             if(query == " ") {
                 return false;
             }
+
             this.axios
-            .get(`https://api.themoviedb.org/3/search/movie?api_key=${process.env.VUE_APP_APIKEY}&query=${query}&page=1`)
+            .get(`https://api.themoviedb.org/3/search/multi?api_key=${process.env.VUE_APP_APIKEY}&language=en-US&query=${query}&page=1&include_adult=false`)
             .then(res => (
                 this.results = res.data.results
             ))

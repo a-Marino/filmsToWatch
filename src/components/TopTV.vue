@@ -21,7 +21,7 @@
                     </div>
                     <div class="flex justify-between p-3">
                         <div>
-                            <h2 class="font-semibold truncate md:text-sm text-lg">{{show.title}}</h2>
+                            <h2 class="font-semibold truncate md:text-sm text-lg">{{show.name}}</h2>
                         </div>
                     </div>
                 </router-link>

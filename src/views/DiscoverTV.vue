@@ -2,20 +2,20 @@
     <div class="flex flex-col">
         <div class="flex lg:flex-row lg:space-x-2 p-2">
             <div class="grid lg:grid-cols-4 grid-cols-2 lg:w-3/4">
-                <div v-for="(movie, Index) in movies" :key="Index">
-                    <router-link :to="'/movie/'+movie.id">
+                <div v-for="(tvShow, Index) in tvShows" :key="Index">
+                    <router-link :to="'/tv/'+tvShow.id">
                         <div class="relative px-3">
                             <div class="rating space-x-3">
-                                <h2 class="text-sm">{{movie.vote_average}}</h2>
+                                <h2 class="text-sm">{{tvShow.vote_average}}</h2>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 11.682 10.847">
                                 <path id="Icon_ionic-ios-star" data-name="Icon ionic-ios-star" d="M13.488,7.13H9.653L8.487,3.651a.422.422,0,0,0-.793,0L6.529,7.13H2.667a.418.418,0,0,0-.417.417.307.307,0,0,0,.008.07.4.4,0,0,0,.175.295l3.152,2.222-1.21,3.518a.418.418,0,0,0,.143.469.4.4,0,0,0,.235.1.511.511,0,0,0,.261-.094l3.077-2.193,3.077,2.193a.489.489,0,0,0,.261.094.375.375,0,0,0,.232-.1.413.413,0,0,0,.143-.469l-1.21-3.518L13.72,7.891l.076-.065a.4.4,0,0,0-.308-.7Z" transform="translate(-2.25 -3.375)"/>
                                 </svg>
                             </div>
-                            <img :src="'https://image.tmdb.org/t/p/original/'+movie.poster_path" alt="poster" @error="$event.target.src='http://via.placeholder.com/1080x1580'" class="poster">
+                            <img :src="'https://image.tmdb.org/t/p/w500/'+tvShow.poster_path" alt="poster" @error="$event.target.src='http://via.placeholder.com/1080x1580'" class="poster">
                         </div>
                         <div class="flex justify-between p-3">
                             <div>
-                                <h2 class="font-semibold truncate md:text-sm text-lg">{{movie.title}}</h2>
+                                <h2 class="font-semibold truncate md:text-sm text-lg">{{tvShow.name}}</h2>
                             </div>
                         </div>
                     </router-link>
@@ -45,10 +45,10 @@
 
 <script>
 export default {
-    name: 'DiscoverMovies',
+    name: 'DiscoverTV',
     data() {
         return {
-            movies: [],
+            tvShows: [],
             genres: [],
             selectedGenreId: '',
             page: 1,
@@ -59,14 +59,14 @@ export default {
         changeGenre(id) {
             this.selectedGenreId = id;
             this.page = 1;
-            this.getMovies()
+            this.getTvShows()
         },
 
         nextPage() {
             if (this.page <= this.lastPage) {
                 this.page++;
                 window.scrollTo(0, 0);
-                this.getMovies();
+                this.getTvShows();
             }
         },
 
@@ -74,22 +74,23 @@ export default {
             if (this.page > 1) {
                 this.page--;
                 window.scrollTo(0, 0);
-                this.getMovies();
+                this.getTvShows();
             }
         },
 
-        async getMovies() {
+        async getTvShows() {
             await this.axios
-            .get(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.VUE_APP_APIKEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${this.page}&with_genres=${this.selectedGenreId}&with_watch_monetization_types=flatrate`)
+            .get(`https://api.themoviedb.org/3/discover/tv?api_key=${process.env.VUE_APP_APIKEY}&language=en-US&sort_by=popularity.desc&page=${this.page}&timezone=America%2FNew_York&with_genres=${this.selectedGenreId}&include_null_first_air_dates=false&with_watch_monetization_types=flatrate&with_status=0&with_type=0`)
             .then(res => (
-                this.movies = res.data.results,
+                console.log(res.data),
+                this.tvShows = res.data.results,
                 this.lastPage = res.data.total_pages
             ));
         },
 
         async getGenres() {
             await this.axios
-            .get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.VUE_APP_APIKEY}&language=en-US`)
+            .get(`https://api.themoviedb.org/3/genre/tv/list?api_key=${process.env.VUE_APP_APIKEY}&language=en-US`)
             .then(res => (
                 //console.log(res.data.genres),
                 this.genres = res.data.genres
@@ -98,7 +99,7 @@ export default {
     },
     mounted() {
         // GET DISCOVER MOVIES
-        this.getMovies();
+        this.getTvShows();
 
         // GET GENERES
         this.getGenres();

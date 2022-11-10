@@ -23,7 +23,12 @@ const routes = [
     path: '/discover/movie',
     name: 'Discover movies',
     component: () => import('../views/DiscoverMovies.vue')
-  }
+  },
+  {
+    path: '/discover/tv',
+    name: 'Discover TV',
+    component: () => import('../views/DiscoverTV.vue')
+  },
 ]
 
 const router = new VueRouter({

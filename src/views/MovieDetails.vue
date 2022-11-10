@@ -18,7 +18,7 @@
             <!-- POSTER / LEFT SIDE CONTENT  -->
             <div class="flex flex-col lg:w-1/4 lg:items-start md:items-center">
                 <div class="relative pr-3 overflow-hidden">
-                    <img :src="'https://image.tmdb.org/t/p/w300'+movieDetail.poster_path" alt="poster">
+                    <img :src="'https://image.tmdb.org/t/p/w300'+movieDetail.poster_path" @error="$event.target.src='http://via.placeholder.com/1080x1580'" alt="poster">
                     <div class="Rating space-x-3 lg:left-2 lg:bottom-2 left-2 bottom-4">
                         <h2 class="text-sm">{{movieDetail.vote_average.toFixed(1)}}</h2>
                         <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 11.682 10.847">

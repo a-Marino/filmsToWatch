@@ -18,7 +18,7 @@
             <!-- POSTER / LEFT SIDE CONTENT  -->
             <div class="flex flex-col lg:w-1/4 lg:items-start md:items-center">
                 <div class="relative pr-3 overflow-hidden">
-                    <img :src="'https://image.tmdb.org/t/p/w300'+TVDetail.poster_path" alt="poster">
+                    <img :src="'https://image.tmdb.org/t/p/w300'+TVDetail.poster_path" @error="$event.target.src='http://via.placeholder.com/1080x1580'" alt="poster">
                     <div class="Rating space-x-3 lg:left-2 lg:bottom-2 left-2 bottom-4">
                         <h2 class="text-sm">{{TVDetail.vote_average}}</h2>
                         <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 11.682 10.847">
@@ -43,7 +43,7 @@
                             <h2 class="text-4xl overflow-hidden font-bold">Overview</h2>
                             <p class="gris text-justify break-words pr-5 pt-1">{{TVDetail.overview}}</p>
                             <div class="flex flex-row mt-4">
-                                <div class="flex flex-col">
+                                <div class="flex flex-col" v-if="TVDetail.created_by.length">
                                     <p class='font-bold text-xl'>{{TVDetail.created_by[0].name}}</p>
                                     <p class="gris text-md">Created by</p>
                                 </div>
@@ -68,7 +68,7 @@
                     </div>
                 </div>
                 <!-- MORE IMAGES -->
-                <div class="flex md:flex-row flex-col more-images items-center md:space-x-4 md:justify-around md:mx-5 mx-10 md:p-3 py-5 md:space-y-0 space-y-4">
+                <div class="flex md:flex-row flex-col more-images items-center md:space-x-4 md:justify-around md:mx-5 mx-10 md:p-3 py-5 md:space-y-0 space-y-4" v-if="TVImages.backdrops.length">
                     <div v-for="(image, Index) in TVImages.backdrops.slice(0,4)" :key="Index">
                         <a :href="'https://image.tmdb.org/t/p/w1280'+image.file_path" target="blank">
                             <img :src="'https://image.tmdb.org/t/p/w1280/'+image.file_path" alt="Backdrop" class="w-56 backdrops">
@@ -98,33 +98,44 @@ export default {
             TVDetail: '',
             TVImages: '',
             similarShows: '',
+            tvId: this.$route.params.id,
+        }
+    },
+    methods: {
+        async getTvDetails() {
+            await this.axios
+            .get(`https://api.themoviedb.org/3/tv/${this.tvId}?api_key=${process.env.VUE_APP_APIKEY}&language=en-US`)
+            .then(res => (
+                this.TVDetail = res.data
+                //console.log(this.TVDetail)
+            )).catch(err => {
+                console.log(err)
+            });
+        },
+
+        async getTvImages() {
+            await this.axios
+            .get(`https://api.themoviedb.org/3/tv/${this.tvId}/images?api_key=${process.env.VUE_APP_APIKEY}`)
+            .then(res => (
+                // console.log(res.data),
+                this.TVImages = res.data
+            ));
+        },
+
+        async getSimilarTvShows() {
+            await this.axios
+            .get(`https://api.themoviedb.org/3/tv/${this.tvId}/similar?api_key=${process.env.VUE_APP_APIKEY}&language=en-US&page=1`)
+            .then(res => (
+                this.similarShows = res.data.results
+            ));
         }
     },
     mounted() {
-        const TVID = this.$route.params.id;
+        this.getTvDetails();
 
-        // GET Movie details
-        this.axios
-        .get(`https://api.themoviedb.org/3/tv/${TVID}?api_key=${process.env.VUE_APP_APIKEY}&language=en-US`)
-        .then(res => (
-            // console.log(res.data),
-            this.TVDetail = res.data, 
-            console.log(this.TVDetail)
-        ));
+        this.getTvImages();
 
-        // GET Movie images
-        this.axios
-        .get(`https://api.themoviedb.org/3/tv/${TVID}/images?api_key=${process.env.VUE_APP_APIKEY}`)
-        .then(res => (
-            // console.log(res.data),
-            this.TVImages = res.data
-        ));
-
-        this.axios
-        .get(`https://api.themoviedb.org/3/tv/${TVID}/similar?api_key=${process.env.VUE_APP_APIKEY}&language=en-US&page=1`)
-        .then(res => (
-            this.similarShows = res.data.results
-        ));
+        this.getSimilarTvShows();
     }
 }
 </script>

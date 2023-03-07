@@ -29,6 +29,11 @@ const routes = [
     name: 'Discover TV',
     component: () => import('../views/DiscoverTV.vue')
   },
+  {
+    path: '/person/:id',
+    name: 'Actors details',
+    component: () => import('../views/ActorDetails.vue')
+  }
 ]
 
 const router = new VueRouter({

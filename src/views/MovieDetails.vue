@@ -56,7 +56,9 @@
                                 <p class="font-bold text-2xl mx-auto">Actors</p>
                                 <div class="flex flex-row space-x-5 justify-around mt-4">
                                     <div v-for="(actor, Index) in actors.slice(0,4)" :key="Index">
-                                        <p class="text-xl gris">{{actor.name}}</p>
+                                        <router-link :to="'/person/'+actor.id">
+                                            <p class="text-xl gris actorName">{{actor.name}}</p>
+                                        </router-link>
                                     </div>
                                 </div>
                             </div>
@@ -154,8 +156,8 @@ export default {
             this.movieCast = res.data,
             this.getDirector(),
             this.getProducer(),
-            this.actors = res.data.cast,
-            console.log(this.actors)
+            this.actors = res.data.cast
+            //console.log(this.actors)
         ));
 
         // GET Movie images
@@ -178,6 +180,14 @@ export default {
 </script>
 
 <style scoped>
+
+.actorName:hover {
+    font-size: 1.5rem;
+    overflow: hidden;
+    cursor: pointer;
+    color: white;
+    transition: .2s;
+}
 .cuadrado {
     background-color: #2D3254;
     padding: 5px;
